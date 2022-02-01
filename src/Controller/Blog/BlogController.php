@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Blog;
 
+use App\Entity\Blog;
 use App\Security\UserIdentity;
 use App\Services\BlogService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,7 @@ class BlogController extends AbstractController
     {
         $blog = $this->serializer->deserialize(
             $request->getContent(),
-            BlogDTO::class,
+            BlogCreateDTO::class,
             'json',
         );
 
@@ -35,5 +36,22 @@ class BlogController extends AbstractController
         );
 
         return $this->json([], Response::HTTP_CREATED);
+    }
+
+    #[Route('/{id}/update', methods: ["PUT"])]
+    public function update(Request $request, Blog $blog): Response
+    {
+        $blogData = $this->serializer->deserialize(
+            $request->getContent(),
+            BlogEditDTO::class,
+            'json',
+        );
+
+        $this->blogService->updateBlog(
+            $blogData,
+            $blog->getId()
+        );
+
+        return $this->json([], Response::HTTP_OK);
     }
 }

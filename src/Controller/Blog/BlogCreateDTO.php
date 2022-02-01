@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Blog;
 
-class BlogDTO
+class BlogCreateDTO
 {
     public function __construct(
         public string $name,

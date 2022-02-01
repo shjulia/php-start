@@ -46,11 +46,9 @@ class Blog
     public function update(
         string $name,
         string $alias,
-        Category $category
     ): void {
         $this->name = $name;
         $this->alias = $alias;
-        $this->category = $category;
     }
 
     public function getId(): string
